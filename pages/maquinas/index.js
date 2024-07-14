@@ -1,8 +1,17 @@
 import Head from 'next/head';
 import styles from '../../styles/Home.module.css';
 import Link from 'next/link';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL + '/maquina';
+const BEARER_TOKEN = process.env.API_BEARER_TOKEN;
+
 export async function getServerSideProps(){
-  const res = await fetch("http://127.0.0.1:8000/api/maquina")
+  const res = await fetch(API_URL, {
+    headers: {
+      'Authorization': `Bearer ${BEARER_TOKEN}`,
+      'Content-Type': 'application/json'
+    }
+  });
   if(!res.ok){
     throw new Error(`Failed to fetch data: ${res.status}`)
   }
